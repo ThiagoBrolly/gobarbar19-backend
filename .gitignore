@@ -1,0 +1,9 @@
+node_modules
+.env
+notion.txt
+build/
+temp/
+.vscode/
+.idea/
+tmp/*
+!tmp/.gitkeep

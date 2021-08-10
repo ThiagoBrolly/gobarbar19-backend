@@ -1,11 +1,25 @@
 import Sequelize from 'sequelize';
+import User from '../app/models/User';
+import File from '../app/models/File';
+
 import dbConfig from '../config/database';
-import User from '../app/models/Users';
-// import Address from '../app/models/Address';
 
-const connection = new Sequelize(dbConfig);
+const models = [User, File];
 
-User.init(connection);
-// Address.init(connection);
+class Database {
+  constructor() {
+    this.init();
+  }
 
-export default connection;
+  init() {
+    this.connection = new Sequelize(dbConfig);
+
+    models
+      .map((model) => model.init(this.connection))
+      .map(
+        (model) => model.associate && model.associate(this.connection.models)
+      );
+  }
+}
+
+export default new Database();
